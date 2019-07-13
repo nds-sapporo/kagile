@@ -112,7 +112,7 @@ class FurikaeriPageState extends State<FurikaeriPage> {
               ),
             ),
           ),
-          drawer: CommonDrawer(this.user),
+          drawer: CommonDrawer(this.user, "furikaeri"),
         ),
       ),
     );
