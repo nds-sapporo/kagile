@@ -14,7 +14,7 @@ class TaskList {
     for(var i in items.keys) {
       Map<dynamic, dynamic> item = items[i];
       String id = i;
-      String user = item["user"];
+      String user = item["nowplay"];
 
       //ImageIcon icon;
       //if( user == "husband" ) {
@@ -25,7 +25,8 @@ class TaskList {
       String title = item["title"];
       String limit = "期限:" + item["limit"];
       String point = item["point"].toString();
-      itemList.add(MyTaskItem(icon: Icons.android, title: title, limit: limit, point: point, id: id, user: user, nowStatus: nowStatus, loginUser: loginUser));
+      String comment = item["comment"];
+      itemList.add(MyTaskItem(icon: Icons.android, title: title, limit: limit, point: point, id: id, user: user, comment: comment, nowStatus: nowStatus, loginUser: loginUser));
     }
   }
 

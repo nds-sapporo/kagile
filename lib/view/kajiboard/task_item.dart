@@ -16,6 +16,7 @@ class MyTaskItem extends StatelessWidget {
   final String title;
   final String limit;
   final String point;
+  final String comment;
 
   MyTaskItem({
     icon,
@@ -26,18 +27,13 @@ class MyTaskItem extends StatelessWidget {
     title,
     limit,
     point,
+    comment,
     context,
   }):
         this.icon = IconButton(
           icon: Icon(icon),
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(
-                    settings: RouteSettings(name: "/detail"),
-                    builder: (context) {
-                      return DetailPage(title: "detail page",);
-                    },
-                ));
+
           }
         ),
         this.id = id,
@@ -46,7 +42,8 @@ class MyTaskItem extends StatelessWidget {
         this.title = title,
         this.limit = limit,
         this.point = point,
-        this.loginUser = loginUser
+        this.loginUser = loginUser,
+        this.comment = comment
   ;
 
   @override
@@ -66,7 +63,7 @@ class MyTaskItem extends StatelessWidget {
         try {
           String preStatus = this.nowStatus;
           String nextStatus;
-          String user = loginUser;
+          String user = this.user;
 
           if (direction == DismissDirection.endToStart) {
             if (this.nowStatus == "status_a") {
@@ -101,7 +98,7 @@ class MyTaskItem extends StatelessWidget {
           else {
             if (this.nowStatus == "status_a") {
               nextStatus = "status_b";
-              user = this.user;
+              user = this.loginUser;
             }
             if (this.nowStatus == "status_b") {
               nextStatus = "status_c";
@@ -173,10 +170,17 @@ class MyTaskItem extends StatelessWidget {
             }
         },
 */
-      child: TasklistTile(
+      child: Padding(
+    padding: EdgeInsets.fromLTRB(20.0, 10.0, 10.0, 10.0),
+    child: TasklistTile(
         title: this.title,
-        subtitle: this.limit,
+        limit: this.limit,
+        loginUser: this.loginUser,
+        user: this.user,
+        comment: this.comment,
+        point: this.point,
         textColor:Colors.black,
+      ),
       ),
 
 /*
