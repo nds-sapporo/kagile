@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kagile/view/summary/summary.dart';
 import 'package:pie_chart/pie_chart.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class SummaryPage extends StatefulWidget {
   SummaryPage({Key key, this.summary}) : super(key: key);
@@ -17,13 +18,48 @@ class SummaryPageState extends State<SummaryPage> {
 
   Summary summary;
   Map<String, double> dataMap;
+  String moneyWife = "";
+  String moneyHusband = "";
+  String moneyOther = "";
+  String pointWife = "";
+  String pointHusband = "";
+
+  var reference = FirebaseDatabase.instance.reference().child("summary").child("201907");
+
+  void initDataMap() {
+    if (summary != null) {
+      this.dataMap.putIfAbsent("夫", () => summary.pointHusband.toDouble());
+      this.dataMap.putIfAbsent("妻", () => summary.pointWife.toDouble());
+      this.dataMap.putIfAbsent("あきらめた", () => summary.pointOther.toDouble());
+    }
+  }
+
+  void loadSummary() {
+    if (summary == null) {
+      reference.once().then((snapshot) {
+        this.summary = Summary(snapshot.value);
+        setState(() {
+          setValues();
+        });
+      });
+    } else {
+      setValues();
+    }
+  }
+
+  void setValues() {
+    moneyWife = summary.moneyWife().toString();
+    moneyHusband = summary.moneyHusband().toString();
+    moneyOther = summary.moneyOther().toString();
+    pointWife = summary.weightedWifePoint().toString();
+    pointHusband = summary.weightedHusbandPoint().toString();
+    initDataMap();
+  }
 
   SummaryPageState(Summary summary) {
     this.summary = summary;
     this.dataMap = new Map();
-    this.dataMap.putIfAbsent("夫", () => summary.pointHusband.toDouble());
-    this.dataMap.putIfAbsent("妻", () => summary.pointWife.toDouble());
-    this.dataMap.putIfAbsent("あきらめた", () => summary.pointOther.toDouble());
+    loadSummary();
   }
 
   @override
@@ -70,7 +106,7 @@ class SummaryPageState extends State<SummaryPage> {
                   ),
                   children: <TextSpan>[
                     TextSpan(
-                      text: "${summary.moneyHusband()}円",
+                      text: "$moneyHusband円",
                       style: TextStyle(fontSize: 18.0, color: Colors.green),
                     ),
                     TextSpan(
@@ -91,7 +127,7 @@ class SummaryPageState extends State<SummaryPage> {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: "${summary.moneyWife()}円",
+                        text: "$moneyWife円",
                         style: TextStyle(fontSize: 18.0, color: Colors.green),
                       ),
                       TextSpan(
@@ -112,7 +148,7 @@ class SummaryPageState extends State<SummaryPage> {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: "${summary.moneyOther()}円",
+                        text: "$moneyOther円",
                         style: TextStyle(fontSize: 18.0, color: Colors.green),
                       ),
                       TextSpan(
@@ -145,7 +181,7 @@ class SummaryPageState extends State<SummaryPage> {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: "${summary.pointHusband}ポイント",
+                        text: "$pointHusbandポイント",
                         style: TextStyle(fontSize: 18.0, color: Colors.green),
                       ),
                       TextSpan(
@@ -166,7 +202,7 @@ class SummaryPageState extends State<SummaryPage> {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: "${summary.pointWife}ポイント",
+                        text: "$pointWifeポイント",
                         style: TextStyle(fontSize: 18.0, color: Colors.green),
                       ),
                       TextSpan(
@@ -198,24 +234,32 @@ class SummaryPageState extends State<SummaryPage> {
                 ),
               )
             ),
-            PieChart(
-              dataMap: dataMap,
-              legendFontColor: Colors.blueGrey[900],
-              legendFontSize: 14.0,
-              legendFontWeight: FontWeight.w500,
-              animationDuration: Duration(milliseconds: 800),
-              chartLegendSpacing: 32.0,
-              chartRadius: MediaQuery
-                  .of(context)
-                  .size
-                  .width / 2.7,
-              showChartValuesInPercentage: true,
-              showChartValues: true,
-              chartValuesColor: Colors.blueGrey[900].withOpacity(0.9),
-            )
+            _graph(),
           ],
         ),
     );
+  }
+
+  Widget _graph() {
+    if (summary == null) {
+      return Container();
+    } else {
+      return PieChart(
+        dataMap: dataMap,
+        legendFontColor: Colors.blueGrey[900],
+        legendFontSize: 14.0,
+        legendFontWeight: FontWeight.w500,
+        animationDuration: Duration(milliseconds: 800),
+        chartLegendSpacing: 32.0,
+        chartRadius: MediaQuery
+            .of(context)
+            .size
+            .width / 2.7,
+        showChartValuesInPercentage: true,
+        showChartValues: true,
+        chartValuesColor: Colors.blueGrey[900].withOpacity(0.9),
+      );
+    }
   }
 
   @override
