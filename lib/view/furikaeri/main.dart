@@ -1,16 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:kagile/view/widget/common_drawer.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 /// ふりかえり
-class FurikaeriPage extends StatelessWidget {
+class FurikaeriPage extends StatefulWidget {
+  FurikaeriPage({Key key}) : super(key: key);
+
+  @override
+  FurikaeriPageState createState() => FurikaeriPageState();
+}
+
+class FurikaeriPageState extends State<FurikaeriPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  var reference = FirebaseDatabase.instance.reference().child("master");
+
   var descTextStyle = TextStyle(fontSize: 25.0,);
   // 設定値格納変数
-  String gankin = '60,000';
-  String taroValue = '10,000';
-  String taroMag = '1.2';
-  String hanakoValue = '5,000';
-  String hanakoMag = '1.0';
+  String gankin = '';
+  String taroValue = '';
+  String taroMag = '';
+  String hanakoValue = '';
+  String hanakoMag = '';
+
+  @override
+  void initState() {
+    super.initState();
+    reference.once().then((snapshot) {
+      setState(() {
+        Map<dynamic, dynamic> master = snapshot.value;
+        gankin = master["okozukai"].toString();
+        Map<dynamic, dynamic> weight = master["weight"];
+        taroMag = weight["husband"].toString();
+        hanakoMag =weight["wife"].toString();
+        taroValue = ((num.parse(gankin) * num.parse(taroMag)) / ((num.parse(taroMag) + num.parse(hanakoMag)))).toString();
+        hanakoValue = ((num.parse(gankin) * num.parse(hanakoMag)) / ((num.parse(taroMag) + num.parse(hanakoMag)))).toString();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -51,7 +79,9 @@ class FurikaeriPage extends StatelessWidget {
                   Text('花子の倍率 ： $hanakoMag 倍', style : descTextStyle),
                   Text('', style : descTextStyle),
                   OutlineButton(
-                    onPressed: () {Navigator.of(context).pushNamed('/summary');},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/summary');
+                      },
                     child: Text("集計", style :  TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold,)),
                   ),
                 ],
