@@ -27,6 +27,7 @@ dependencies:
   flutter_slidable: ^0.5.3
   firebase_core: ^0.4.0
   firebase_database: ^3.0.4
+  http: ^0.12.0+1
 
 dev_dependencies:
   flutter_test:
@@ -46,6 +47,7 @@ flutter:
 
   assets:
     - images/dog.jpg
+    - images/logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
