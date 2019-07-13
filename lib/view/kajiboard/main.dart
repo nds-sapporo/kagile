@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kagile/view/widget/common_drawer.dart';
+import 'tab_item.dart';
 
 /// 家事ボード
 class KajiboardPage extends StatelessWidget {
@@ -36,10 +37,10 @@ class KajiboardPage extends StatelessWidget {
             },
             body: TabBarView(
               children: [
-                Text("bbbbbbbbbbbb"),
-                Text("bbbbb"),
-                Text("ccccc"),
-                Text("ddddd"),
+                MyTabItem(status: "status_a"),
+                MyTabItem(status: "status_b"),
+                MyTabItem(status: "status_c"),
+                MyTabItem(status: "status_d"),
               ],
             ),
           ),
