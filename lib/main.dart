@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kagile/view/home/main.dart';
 import 'package:kagile/view/kajiboard/main.dart';
+import 'package:kagile/view/furikaeri/main.dart';
 import 'package:kagile/view/summary/main.dart';
 import 'package:kagile/view/setting/main.dart';
 import 'package:kagile/view/widget/common_drawer.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       routes: {
         "/": (_) => LoginPage(),
         "/kajiboard": (_) => KajiboardPage(),
+        "/furikaeri": (_) => FurikaeriPage(),
         "/summary": (_) => SummaryPage(),
         "/setting": (_) => SettingPage(),
       },
@@ -42,7 +44,7 @@ class Omoide extends StatelessWidget {
                       tooltip: 'menu button',
                       icon: const Icon(Icons.menu,color: Colors.white,),
                       onPressed: () => _scaffoldKey.currentState.openDrawer()),
-                  title: Image.asset('images/logo.png'),
+                  title: Image.asset('images/head.png'),
                   pinned: true,
                   floating: true,
                   forceElevated: innerBoxIsScrolled,

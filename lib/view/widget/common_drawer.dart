@@ -19,7 +19,7 @@ class CommonDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('ふりかえり'),
-            onTap: () {Navigator.of(context).pushNamed('/summary');},
+            onTap: () {Navigator.of(context).pushNamed('/furikaeri');},
           ),
           Container(
             child: ListTile(
