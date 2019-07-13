@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:kagile/view/furikaeri/main.dart';
 //import 'package:kagile/view/widget/about_tile.dart';
 //import 'package:kagile/utils/uidata.dart';
 
 class CommonDrawer extends StatelessWidget {
+  final String user;
+  CommonDrawer(this.user);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -14,12 +18,21 @@ class CommonDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           ListTile(
-            title: Text('家事ボード'),
+            title: Text(user),
             onTap: () {Navigator.of(context).pushNamed('/kajiboard');},
           ),
           ListTile(
             title: Text('ふりかえり'),
-            onTap: () {Navigator.of(context).pushNamed('/furikaeri');},
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                      settings: RouteSettings(name: '/furikaeri'),
+                    builder: (context) {
+                        return FurikaeriPage(user:user);
+                    }
+                  )
+              );
+              },
           ),
           Container(
             child: ListTile(

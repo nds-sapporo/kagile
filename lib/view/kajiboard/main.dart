@@ -3,7 +3,11 @@ import 'package:kagile/view/widget/common_drawer.dart';
 
 /// 家事ボード
 class KajiboardPage extends StatelessWidget {
+  KajiboardPage(this.user);
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final String user;
+
   @override
   Widget build(BuildContext context) {
     final tabs = ['やって！', 'やってる！', 'やったよ！', 'できた！'];
@@ -43,7 +47,7 @@ class KajiboardPage extends StatelessWidget {
               ],
             ),
           ),
-          drawer: CommonDrawer(),
+          drawer: CommonDrawer(user),
           floatingActionButton: new FloatingActionButton(
               onPressed: () => {},
               backgroundColor: Color.fromARGB(255, 0, 190, 200),

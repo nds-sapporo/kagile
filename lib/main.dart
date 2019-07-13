@@ -15,10 +15,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         "/": (_) => LoginPage(),
-        "/kajiboard": (_) => KajiboardPage(),
+//        "/kajiboard": (_) => KajiboardPage(),
         "/furikaeri": (_) => FurikaeriPage(),
         "/summary": (_) => SummaryPage(),
-        "/setting": (_) => SettingPage(),
+//        "/setting": (_) => SettingPage(),
       },
     );
   }
@@ -54,7 +54,7 @@ class Omoide extends StatelessWidget {
             },
             body: Text("bbbbbbbbbbbb")
           ),
-          drawer: CommonDrawer(),
+          drawer: CommonDrawer("太郎"),
         ),
       ),
     );

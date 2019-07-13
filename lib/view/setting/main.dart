@@ -3,6 +3,9 @@ import 'package:kagile/view/widget/common_drawer.dart';
 
 /// 設定
 class SettingPage extends StatelessWidget {
+  SettingPage(this.user);
+
+  final String user;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -30,7 +33,7 @@ class SettingPage extends StatelessWidget {
               },
               body: Text("SettingPage")
           ),
-          drawer: CommonDrawer(),
+          drawer: CommonDrawer(user),
         ),
       ),
     );
