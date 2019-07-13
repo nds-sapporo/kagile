@@ -26,7 +26,7 @@ class KajiboardPage extends StatelessWidget {
                       tooltip: 'menu button',
                       icon: const Icon(Icons.menu,color: Colors.white,),
                       onPressed: () => _scaffoldKey.currentState.openDrawer()),
-                  title: Image.asset('images/logo.png'),
+                  title: Image.asset('images/head.png'),
                   pinned: true,
                   floating: true,
                   forceElevated: innerBoxIsScrolled,
@@ -41,14 +41,14 @@ class KajiboardPage extends StatelessWidget {
             },
             body: TabBarView(
               children: [
-                MyTabItem(status: "status_a"),
-                MyTabItem(status: "status_b"),
-                MyTabItem(status: "status_c"),
-                MyTabItem(status: "status_d"),
+                MyTabItem(status: "status_a", user: this.user),
+                MyTabItem(status: "status_b", user: this.user),
+                MyTabItem(status: "status_c", user: this.user),
+                MyTabItem(status: "status_d", user: this.user),
               ],
             ),
           ),
-          drawer: CommonDrawer(user),
+          drawer: CommonDrawer(user, "kajiboard"),
           floatingActionButton: new FloatingActionButton(
               onPressed: () => {},
               backgroundColor: Color.fromARGB(255, 0, 190, 200),

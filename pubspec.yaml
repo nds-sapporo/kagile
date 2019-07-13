@@ -52,6 +52,8 @@ flutter:
     - images/dog.jpg
     - images/logo.png
     - images/head.png
+    - images/ohashi.jpg
+    - images/noboribetsu.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

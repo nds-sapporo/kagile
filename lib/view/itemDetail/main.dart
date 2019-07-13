@@ -4,9 +4,12 @@ import 'package:kagile/view/widget/task_tile.dart';
 import 'package:kagile/view/widget/point_tile.dart';
 
 class DetailPage extends StatelessWidget {
-  DetailPage({Key key, this.title}) : super(key: key);
+  DetailPage(this.title, this.limit, this.comment, this.point, {Key key}) : super(key: key);
   Size deviceSize;
   final String title;
+  final String limit;
+  final String comment;
+  final String point;
 
   Widget profileHeader() => Container(
     height: deviceSize.height / 8,
@@ -18,8 +21,8 @@ class DetailPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           TaskTile(
-            title: "夕食",
-            subtitle: "期限：2019/07/14 20:00",
+            title: this.title,
+            subtitle: "期限：" + this.limit,
               textColor:Colors.white,
           ),
         ],
@@ -70,7 +73,7 @@ class DetailPage extends StatelessWidget {
                 itemBuilder: (context, i) => Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "野菜を多めにすること",
+                    this.comment,
                     style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.0),
                   ),
 //                  child: Image.network(
@@ -122,7 +125,7 @@ class DetailPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
         PointTile(
-          title: "500pt",
+          title: this.point + "pt",
           subtitle: "ポイント",
         ),
       ],

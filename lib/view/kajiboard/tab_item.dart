@@ -8,11 +8,14 @@ class MyTabItem extends StatefulWidget {
 
   MyTabItem({
     status,
+    user
   }):
-        this.status = status
+        this.status = status,
+        this.user = user
   ;
 
   final String status;
+  final String user;
 
   @override
   _MyTabItemState createState() => _MyTabItemState();
@@ -30,16 +33,20 @@ class _MyTabItemState extends State<MyTabItem> {
   var reference = FirebaseDatabase.instance.reference().child("task");
 
   void loadList() {
-    if (tasklist == null) {
+//    if (tasklist == null) {
       reference.child(widget.status).once().then((snapshot) {
-        this.tasklist = TaskList(snapshot.value, widget.status, "husband");
+        String user ;
+        if( widget.user == "太郎" ){user = "husband";}
+        if( widget.user == "花子" ){user = "wife";}
+
+        this.tasklist = TaskList(snapshot.value, widget.status, user);
         setState(() {
           listItem = tasklist.itemList;
         });
       });
-    } else {
-      //setValues();
-    }
+//    } else {
+//      //setValues();
+//    }
   }
 
   @override
