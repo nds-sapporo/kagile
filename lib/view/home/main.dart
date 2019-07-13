@@ -37,7 +37,7 @@ class _LoginState  extends State<LoginPage> {
                 }).toList(),
               ),
             ),
-            Text('',),
+            SizedBox(height: 16.0),
             OutlineButton(
               onPressed: () {Navigator.of(context).pushNamed('/kajiboard');},
               child: Text("ログイン", style : TextStyle(fontSize: 30.0)),
