@@ -111,7 +111,7 @@ class SummaryPageState extends State<SummaryPage> {
               ),
             ),
           ),
-          drawer: CommonDrawer(user),
+          drawer: CommonDrawer(user, "summary"),
         ),
       ),
     );

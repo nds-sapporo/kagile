@@ -118,7 +118,7 @@ class SettingPageState extends State<SettingPage> {
           ),
         ),
       ),
-      drawer: CommonDrawer(user),
+      drawer: CommonDrawer(user, "setting"),
     );
   }
 }

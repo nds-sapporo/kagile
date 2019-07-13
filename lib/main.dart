@@ -54,7 +54,7 @@ class Omoide extends StatelessWidget {
             },
             body: Text("bbbbbbbbbbbb")
           ),
-          drawer: CommonDrawer("太郎"),
+          drawer: CommonDrawer("太郎", "omoide"),
         ),
       ),
     );
