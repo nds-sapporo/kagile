@@ -30,7 +30,7 @@ class SummaryPageState extends State<SummaryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("振り返り"),
+        title: Text("ふりかえり"),
       ),
       body:Card(
         elevation: 4.0,
@@ -38,18 +38,22 @@ class SummaryPageState extends State<SummaryPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-//            Image.asset('assets/neko1_600x400.jpg'),
-            _titleArea(),
+            _leadArea(),
+            Divider(
+              color: Colors.grey,
+            ),
+            _pointArea(),
+            Divider(
+              color: Colors.grey,
+            ),
             _graphArea(),
-//            _descriptionArea()
           ],
         ),
       )
-//      bottomNavigationBar: BottomBar(0),// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
-  Widget _titleArea() {
+  Widget _leadArea() {
     return Container(
         margin: EdgeInsets.all(16.0),
         width: MediaQuery.of(context).size.width*0.9,
@@ -57,65 +61,124 @@ class SummaryPageState extends State<SummaryPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              margin: const EdgeInsets.only(bottom: 4.0),
-              child: Text(
-                "夫の今月のおこづかいは",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 16.0),
-              ),
+              margin: const EdgeInsets.only(bottom: 16.0),
+              child: RichText(
+                text: TextSpan(
+                  text: "夫のおこづかいは: ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: "${summary.moneyHusband()}円",
+                      style: TextStyle(fontSize: 18.0, color: Colors.green),
+                    ),
+                    TextSpan(
+                      text: " です",
+                      style: TextStyle(fontSize: 16.0, color: Colors.black),
+                    ),
+                  ]
+                ),
+              )
             ),
-            Container(  // 3.1.2行目
-              child: Text(
-                "${summary.moneyHusband()}円",
-                style: TextStyle(fontSize: 12.0, color: Colors.grey),
-              ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 16.0),
+              child: RichText(
+                text: TextSpan(
+                    text: "妻のおこづかいは: ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "${summary.moneyWife()}円",
+                        style: TextStyle(fontSize: 18.0, color: Colors.green),
+                      ),
+                      TextSpan(
+                        text: " です",
+                        style: TextStyle(fontSize: 16.0, color: Colors.black),
+                      ),
+                    ]
+                ),
+              )
             ),
-            Container(  // 3.1.2行目
-              child: Text(
-                "です",
-                style: TextStyle(fontSize: 12.0, color: Colors.grey),
-              ),
-            ),Container(
-              margin: const EdgeInsets.only(bottom: 4.0),
-              child: Text(
-                "妻の今月のおこづかいは",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 16.0),
-              ),
-            ),
-            Container(  // 3.1.2行目
-              child: Text(
-                "${summary.moneyWife()}円",
-                style: TextStyle(fontSize: 12.0, color: Colors.grey),
-              ),
-            ),
-            Container(  // 3.1.2行目
-              child: Text(
-                "です",
-                style: TextStyle(fontSize: 12.0, color: Colors.grey),
-              ),
-            ),Container(
-              margin: const EdgeInsets.only(bottom: 4.0),
-              child: Text(
-                "キャリーオーバーは",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 16.0),
-              ),
-            ),
-            Container(  // 3.1.2行目
-              child: Text(
-                "${summary.moneyOther()}円",
-                style: TextStyle(fontSize: 12.0, color: Colors.grey),
-              ),
-            ),
-            Container(  // 3.1.2行目
-              child: Text(
-                "です",
-                style: TextStyle(fontSize: 12.0, color: Colors.grey),
-              ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 16.0),
+              child: RichText(
+                text: TextSpan(
+                    text: "キャリーオーバーは: ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "${summary.moneyOther()}円",
+                        style: TextStyle(fontSize: 18.0, color: Colors.green),
+                      ),
+                      TextSpan(
+                        text: " です",
+                        style: TextStyle(fontSize: 16.0, color: Colors.black),
+                      ),
+                    ]
+                ),
+              )
             ),
           ],
         ),
+    );
+  }
+
+  Widget _pointArea() {
+    return Container(
+      margin: EdgeInsets.all(16.0),
+      width: MediaQuery.of(context).size.width*0.9,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+              margin: const EdgeInsets.only(bottom: 16.0),
+              child: RichText(
+                text: TextSpan(
+                    text: "夫の獲得ポイントは: ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "${summary.pointHusband}ポイント",
+                        style: TextStyle(fontSize: 18.0, color: Colors.green),
+                      ),
+                      TextSpan(
+                        text: " でした",
+                        style: TextStyle(fontSize: 16.0, color: Colors.black),
+                      ),
+                    ]
+                ),
+              )
+          ),
+          Container(
+              margin: const EdgeInsets.only(bottom: 16.0),
+              child: RichText(
+                text: TextSpan(
+                    text: "妻の獲得ポイントは: ",
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: "${summary.pointWife}ポイント",
+                        style: TextStyle(fontSize: 18.0, color: Colors.green),
+                      ),
+                      TextSpan(
+                        text: " でした",
+                        style: TextStyle(fontSize: 16.0, color: Colors.black),
+                      ),
+                    ]
+                ),
+              )
+          ),
+        ],
+      ),
     );
   }
 
@@ -126,6 +189,15 @@ class SummaryPageState extends State<SummaryPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Center(
+              child: Text(
+                "ポイント獲得比率",
+                style: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.lightGreen,
+                ),
+              )
+            ),
             PieChart(
               dataMap: dataMap,
               legendFontColor: Colors.blueGrey[900],
