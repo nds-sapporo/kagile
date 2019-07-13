@@ -4,7 +4,6 @@ import 'package:kagile/view/summary/summary.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:kagile/view/widget/common_drawer.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 class SummaryPage extends StatefulWidget {
   SummaryPage({Key key, this.summary, this.user}) : super(key: key);
@@ -19,7 +18,6 @@ class SummaryPage extends StatefulWidget {
 
 class SummaryPageState extends State<SummaryPage> {
   var listItem = [];
-  final FirebaseMessaging _firebaseMessaging = new FirebaseMessaging();
 
   Summary summary;
   Map<String, double> dataMap;
@@ -113,7 +111,7 @@ class SummaryPageState extends State<SummaryPage> {
               ),
             ),
           ),
-          drawer: CommonDrawer(user),
+          drawer: CommonDrawer(user, "summary"),
         ),
       ),
     );
@@ -307,56 +305,6 @@ class SummaryPageState extends State<SummaryPage> {
   void initState() {
     super.initState();
 
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(sound: true, badge: true, alert: true));
-
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-        _buildDialog(context, "onMessage");
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-        _buildDialog(context, "onLaunch");
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-        _buildDialog(context, "onResume");
-      },
-    );
-    _firebaseMessaging.getToken().then((String token) {
-      assert(token != null);
-      print("Push Messaging token: $token");
-    });
-    if (user == "太郎") {
-      print("subcribe: 太郎");
-      _firebaseMessaging.subscribeToTopic("/topics/husband");
-    }
-    if (user == "花子") {
-      print("subcribe: 太郎");
-      _firebaseMessaging.subscribeToTopic("/topics/wife");
-    }
-
-  }
-
-  void _buildDialog(BuildContext context, String message) {
-    showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return new AlertDialog(
-            content: new Text("$message"),
-            actions: <Widget>[
-              new FlatButton(
-                child: const Text('CLOSE'),
-                onPressed: () {
-                  Navigator.pop(context, false);
-                },
-              ),
-            ],
-          );
-        }
-    );
   }
 
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kagile/view/summary/main.dart';
 import 'package:kagile/view/widget/common_drawer.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 /// ふりかえり
 class FurikaeriPage extends StatefulWidget {
@@ -45,6 +47,22 @@ class FurikaeriPageState extends State<FurikaeriPage> {
     });
   }
 
+   void summary() async {
+
+    const url = "https://us-central1-spajam-kajaile.cloudfunctions.net/calcSummary";
+    final response = await http.put(url,
+        headers: {"Content-Type": "application/json"});
+
+    print(response);
+
+    Navigator.of(context).push(
+        MaterialPageRoute(settings: RouteSettings(name:'/summary'),
+            builder: (context) {
+              return SummaryPage(user:user);
+            }
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -78,20 +96,15 @@ class FurikaeriPageState extends State<FurikaeriPage> {
                   SizedBox(height: 28.0),
                   Text('おこづかい原資 ： $gankin 円', style : TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold,)),
                   SizedBox(height: 28.0),
-                  Text('太郎のベース額 ： $taroValue 円', style : descTextStyle),
+//                  Text('太郎のベース額 ： $taroValue 円', style : descTextStyle),
                   Text('太郎の倍率 ： $taroMag 倍', style : descTextStyle),
                   SizedBox(height: 28.0),
-                  Text('花子のベース額 ： $hanakoValue 円', style : descTextStyle),
+//                  Text('花子のベース額 ： $hanakoValue 円', style : descTextStyle),
                   Text('花子の倍率 ： $hanakoMag 倍', style : descTextStyle),
                   SizedBox(height: 28.0),
                   OutlineButton(
                     onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(settings: RouteSettings(name:'/summary'),
-                          builder: (context) {
-                            return SummaryPage(user:user);
-                          }
-                          ));
+                      summary();
                       },
                     child: Text("集計", style :  TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold,)),
                   ),
@@ -99,7 +112,7 @@ class FurikaeriPageState extends State<FurikaeriPage> {
               ),
             ),
           ),
-          drawer: CommonDrawer(this.user),
+          drawer: CommonDrawer(this.user, "furikaeri"),
         ),
       ),
     );
