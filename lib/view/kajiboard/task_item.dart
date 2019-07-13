@@ -4,6 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:kagile/view/itemDetail/main.dart';
 import 'package:kagile/view/widget/tasklist_tile.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class MyTaskItem extends StatelessWidget {
   final IconButton icon;
@@ -123,19 +125,30 @@ class MyTaskItem extends StatelessWidget {
             }
           }
 
-          final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
-            functionName: 'moveTask',
-          );
+          const url = "https://us-central1-spajam-kajaile.cloudfunctions.net/moveTask";
+          final response = await http.put(url,
+              body: json.encode({
+                'taskId':this.id,
+                'preStatus':preStatus,
+                'nextStatus':nextStatus,
+                'nowplay': user
+              }),
+              headers: {"Content-Type": "application/json"});
+          print(response);
+
+//          final HttpsCallable callable = CloudFunctions.instance.getHttpsCallable(
+//            functionName: 'moveTask',
+//          );
           
-          final dynamic resp = await callable.call(
-            <String, dynamic>{
-              'taskId':this.id,
-              'preStatus':preStatus,
-              'nextStatus':nextStatus,
-              'nowplay': user
-            },
-          );
-          print(resp);
+//          final dynamic resp = await callable.call(
+//            <String, dynamic>{
+//              'taskId':this.id,
+//              'preStatus':preStatus,
+//              'nextStatus':nextStatus,
+//              'nowplay': user
+//            },
+//          );
+//          print(resp);
         } on CloudFunctionsException catch (e) {
           print('caught firebase functions exception');
           print(e.code);
