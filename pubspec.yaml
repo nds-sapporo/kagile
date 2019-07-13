@@ -27,6 +27,7 @@ dependencies:
   flutter_slidable: ^0.5.3
   firebase_core: ^0.4.0
   firebase_database: ^3.0.4
+  firebase_messaging: ^5.1.0
   http: ^0.12.0+1
   pie_chart: ^1.0.0
 
