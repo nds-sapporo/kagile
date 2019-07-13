@@ -48,7 +48,7 @@ class KajiboardPage extends StatelessWidget {
               ],
             ),
           ),
-          drawer: CommonDrawer(user),
+          drawer: CommonDrawer(user, "kajiboard"),
           floatingActionButton: new FloatingActionButton(
               onPressed: () => {},
               backgroundColor: Color.fromARGB(255, 0, 190, 200),
