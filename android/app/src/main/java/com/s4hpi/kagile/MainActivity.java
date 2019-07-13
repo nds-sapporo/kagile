@@ -1,4 +1,4 @@
-package com.s4hpi.foretter;
+package com.s4hpi.kagile;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
