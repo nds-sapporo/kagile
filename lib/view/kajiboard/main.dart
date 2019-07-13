@@ -1,36 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:kagile/view/home/main.dart';
-import 'package:kagile/view/kajiboard/main.dart';
-import 'package:kagile/view/summary/main.dart';
-import 'package:kagile/view/setting/main.dart';
 import 'package:kagile/view/widget/common_drawer.dart';
 
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        "/": (_) => LoginPage(),
-        "/kajiboard": (_) => KajiboardPage(),
-        "/summary": (_) => SummaryPage(),
-        "/setting": (_) => SettingPage(),
-      },
-    );
-  }
-}
-
-
-/// Omoide
-class Omoide extends StatelessWidget {
+/// 家事ボード
+class KajiboardPage extends StatelessWidget {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    final tabs = ['やって！', 'やってる！', 'やったよ！', 'できた！'];
     return new Scaffold(
       body:DefaultTabController(
-        length: 1,
+        length: tabs.length,
         child: Scaffold(
           key: _scaffoldKey,
           body: new NestedScrollView(
@@ -46,15 +25,38 @@ class Omoide extends StatelessWidget {
                   pinned: true,
                   floating: true,
                   forceElevated: innerBoxIsScrolled,
+                  bottom: TabBar(
+                    labelColor:Colors.white,
+                    unselectedLabelColor: Colors.black45,
+                    tabs: tabs.map((String name) => Tab(text: name)).toList(),
+                  ),
                   backgroundColor: Color.fromARGB(255, 0, 190, 200),
                 )
               ];
             },
-            body: Text("bbbbbbbbbbbb")
+            body: TabBarView(
+              children: [
+                Text("bbbbbbbbbbbb"),
+                Text("bbbbb"),
+                Text("ccccc"),
+                Text("ddddd"),
+              ],
+            ),
           ),
           drawer: CommonDrawer(),
+          floatingActionButton: new FloatingActionButton(
+              onPressed: () => {},
+              backgroundColor: Color.fromARGB(255, 0, 190, 200),
+              child: new Stack(children: [
+                new Positioned ( // headline
+                  child: new Container(
+                    child: new Icon(Icons.add),
+                  ),
+                ), ])
+          ),
         ),
       ),
     );
   }
 }
+
