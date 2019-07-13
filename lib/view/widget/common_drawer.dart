@@ -18,7 +18,7 @@ class CommonDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           ListTile(
-            title: Text(user),
+            title: Text('家事ボード'),
             onTap: () {Navigator.of(context).pushNamed('/kajiboard');},
           ),
           ListTile(
