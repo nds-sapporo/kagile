@@ -20,7 +20,7 @@ class SettingPage extends StatelessWidget {
                         tooltip: 'menu button',
                         icon: const Icon(Icons.menu,color: Colors.white,),
                         onPressed: () => _scaffoldKey.currentState.openDrawer()),
-                    title: Image.asset('images/logo.png'),
+                    title: Image.asset('images/head.png'),
                     pinned: true,
                     floating: true,
                     forceElevated: innerBoxIsScrolled,

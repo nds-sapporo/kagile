@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:kagile/view/summary/summary.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:kagile/view/widget/common_drawer.dart';
 
 class SummaryPage extends StatefulWidget {
   SummaryPage({Key key, this.summary}) : super(key: key);
@@ -28,8 +29,8 @@ class SummaryPageState extends State<SummaryPage> {
 
   void initDataMap() {
     if (summary != null) {
-      this.dataMap.putIfAbsent("夫", () => summary.pointHusband.toDouble());
-      this.dataMap.putIfAbsent("妻", () => summary.pointWife.toDouble());
+      this.dataMap.putIfAbsent("太郎", () => summary.pointHusband.toDouble());
+      this.dataMap.putIfAbsent("花子", () => summary.pointWife.toDouble());
       this.dataMap.putIfAbsent("あきらめた", () => summary.pointOther.toDouble());
     }
   }
@@ -64,28 +65,51 @@ class SummaryPageState extends State<SummaryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("ふりかえり"),
-      ),
-      body:Card(
-        elevation: 4.0,
-        margin: const EdgeInsets.all(10.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _leadArea(),
-            Divider(
-              color: Colors.grey,
+    final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+    return new Scaffold(
+      body:DefaultTabController(
+        length: 1,
+        child: Scaffold(
+          key: _scaffoldKey,
+          body: new NestedScrollView(
+            controller: ScrollController(),
+            headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                new SliverAppBar(
+                  leading: IconButton(
+                      tooltip: 'menu button',
+                      icon: const Icon(Icons.menu,color: Colors.white,),
+                      onPressed: () => _scaffoldKey.currentState.openDrawer()),
+                  title: Image.asset('images/head.png'),
+                  pinned: true,
+                  floating: true,
+                  forceElevated: innerBoxIsScrolled,
+                  backgroundColor: Color.fromARGB(255, 0, 190, 200),
+                )
+              ];
+            },
+            body:Card(
+              elevation: 4.0,
+              margin: const EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _leadArea(),
+                  Divider(
+                    color: Colors.grey,
+                  ),
+                  _pointArea(),
+                  Divider(
+                    color: Colors.grey,
+                  ),
+                  _graphArea(),
+                ],
+              ),
             ),
-            _pointArea(),
-            Divider(
-              color: Colors.grey,
-            ),
-            _graphArea(),
-          ],
+          ),
+          drawer: CommonDrawer(),
         ),
-      )
+      ),
     );
   }
 
@@ -100,7 +124,7 @@ class SummaryPageState extends State<SummaryPage> {
               margin: const EdgeInsets.only(bottom: 16.0),
               child: RichText(
                 text: TextSpan(
-                  text: "夫のおこづかいは: ",
+                  text: "太郎のおこづかいは: ",
                   style: TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
                   ),
@@ -121,7 +145,7 @@ class SummaryPageState extends State<SummaryPage> {
               margin: const EdgeInsets.only(bottom: 16.0),
               child: RichText(
                 text: TextSpan(
-                    text: "妻のおこづかいは: ",
+                    text: "花子のおこづかいは: ",
                     style: TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
                     ),
@@ -175,7 +199,7 @@ class SummaryPageState extends State<SummaryPage> {
               margin: const EdgeInsets.only(bottom: 16.0),
               child: RichText(
                 text: TextSpan(
-                    text: "夫の獲得ポイントは: ",
+                    text: "太郎の獲得ポイントは: ",
                     style: TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
                     ),
@@ -196,7 +220,7 @@ class SummaryPageState extends State<SummaryPage> {
               margin: const EdgeInsets.only(bottom: 16.0),
               child: RichText(
                 text: TextSpan(
-                    text: "妻の獲得ポイントは: ",
+                    text: "花子の獲得ポイントは: ",
                     style: TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
                     ),
