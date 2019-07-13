@@ -70,8 +70,10 @@ class MyTaskItem extends StatelessWidget {
 
           if (direction == DismissDirection.endToStart) {
             if (this.nowStatus == "status_a") {
+              // 「やって」から前には更新しない
               nextStatus = "status_a";
               user = "other";
+              return;
             }
             if (this.nowStatus == "status_b") {
               nextStatus = "status_a";
@@ -120,8 +122,10 @@ class MyTaskItem extends StatelessWidget {
               }
             }
             if (this.nowStatus == "status_d") {
+              // 「出来た」から後続には更新しない
               nextStatus = "status_d";
               user = this.user;
+              return;
             }
           }
 
