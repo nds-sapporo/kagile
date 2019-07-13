@@ -26,7 +26,7 @@ class SettingPageState extends State<SettingPage> {
 
   void saveSetting() async {
     await reference.update({
-      "okozukai": valueTextController.text,
+      "okozukai": int.parse(valueTextController.text),
       "weight": {
         "husband": double.parse(taroTextController.text),
         "wife": double.parse(hanakoTextController.text),
