@@ -3,8 +3,8 @@ class Summary {
   int pointWife;
   int pointOther;
   int money;
-  int weightHusband;
-  int weightWife;
+  num weightHusband;
+  num weightWife;
 
   Summary(dynamic value) {
     Map<dynamic, dynamic> _value = value;
@@ -19,11 +19,11 @@ class Summary {
   }
 
   int weightedWifePoint() {
-    return pointWife * weightWife;
+    return (pointWife * weightWife).round();
   }
 
   int weightedHusbandPoint() {
-    return pointHusband * weightHusband;
+    return (pointHusband * weightHusband).round();
   }
 
   int moneyWife() {
@@ -35,7 +35,7 @@ class Summary {
   }
 
   int moneyOther() {
-    return ((money*pointOther)/(pointHusband+pointWife+pointOther)).ceil();
+    return ((money*pointOther)/(weightedHusbandPoint()+weightedWifePoint()+pointOther)).ceil();
   }
 
   int actualMoney() {
