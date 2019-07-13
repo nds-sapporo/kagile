@@ -15,6 +15,7 @@ class CommonScaffold extends StatelessWidget {
   final floatingIcon;
   final centerDocked;
   final elevation;
+  final user;
 
   CommonScaffold(
       {this.appTitle,
@@ -27,6 +28,7 @@ class CommonScaffold extends StatelessWidget {
       this.showBottomNav = false,
       this.centerDocked = false,
       this.floatingIcon,
+      this.user,
       this.elevation = 4.0});
 
   Widget myBottomBar() => BottomAppBar(
@@ -105,7 +107,7 @@ class CommonScaffold extends StatelessWidget {
           )
         ],
       ),
-      drawer: showDrawer ? CommonDrawer() : null,
+      drawer: showDrawer ? CommonDrawer(user) : null,
       body: bodyData,
       floatingActionButton: showFAB
           ? CustomFloat(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kagile/view/kajiboard/main.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key}) : super(key: key);
@@ -39,7 +40,15 @@ class _LoginState  extends State<LoginPage> {
             ),
             SizedBox(height: 16.0),
             OutlineButton(
-              onPressed: () {Navigator.of(context).pushNamed('/kajiboard');},
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(settings: RouteSettings(name:'/kajiboard'),
+                      builder: (context) {
+                        return KajiboardPage(dropdownValue);
+                      }
+                    )
+                );
+                },
               child: Text("ログイン", style : TextStyle(fontSize: 30.0)),
             ),
           ],

@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:kagile/view/summary/main.dart';
 import 'package:kagile/view/widget/common_drawer.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 /// ふりかえり
 class FurikaeriPage extends StatefulWidget {
-  FurikaeriPage({Key key}) : super(key: key);
+  FurikaeriPage({Key key, this.user}) : super(key: key);
+
+  final String user;
 
   @override
-  FurikaeriPageState createState() => FurikaeriPageState();
+  FurikaeriPageState createState() => FurikaeriPageState(user);
 }
 
 class FurikaeriPageState extends State<FurikaeriPage> {
@@ -22,6 +25,9 @@ class FurikaeriPageState extends State<FurikaeriPage> {
   String taroMag = '';
   String hanakoValue = '';
   String hanakoMag = '';
+  final String user;
+
+  FurikaeriPageState(this.user);
 
   @override
   void initState() {
@@ -80,7 +86,12 @@ class FurikaeriPageState extends State<FurikaeriPage> {
                   SizedBox(height: 28.0),
                   OutlineButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/summary');
+                      Navigator.of(context).push(
+                          MaterialPageRoute(settings: RouteSettings(name:'/summary'),
+                          builder: (context) {
+                            return SummaryPage(user:user);
+                          }
+                          ));
                       },
                     child: Text("集計", style :  TextStyle(fontSize: 25.0, fontWeight: FontWeight.bold,)),
                   ),
@@ -88,7 +99,7 @@ class FurikaeriPageState extends State<FurikaeriPage> {
               ),
             ),
           ),
-          drawer: CommonDrawer(),
+          drawer: CommonDrawer(this.user),
         ),
       ),
     );

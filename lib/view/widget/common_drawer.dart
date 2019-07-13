@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:kagile/view/furikaeri/main.dart';
+import 'package:kagile/view/kajiboard/main.dart';
+import 'package:kagile/view/setting/main.dart';
 //import 'package:kagile/view/widget/about_tile.dart';
 //import 'package:kagile/utils/uidata.dart';
 
 class CommonDrawer extends StatelessWidget {
+  final String user;
+  CommonDrawer(this.user);
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -15,11 +21,26 @@ class CommonDrawer extends StatelessWidget {
         children: <Widget>[
           ListTile(
             title: Text('家事ボード'),
-            onTap: () {Navigator.of(context).pushNamed('/kajiboard');},
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(settings: RouteSettings(name: '/kajiboard'),
+                      builder: (context) {
+                        return KajiboardPage(user);
+                      }));
+              },
           ),
           ListTile(
             title: Text('ふりかえり'),
-            onTap: () {Navigator.of(context).pushNamed('/furikaeri');},
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(
+                      settings: RouteSettings(name: '/furikaeri'),
+                    builder: (context) {
+                        return FurikaeriPage(user:user);
+                    }
+                  )
+              );
+              },
           ),
           Container(
             child: ListTile(
@@ -32,7 +53,13 @@ class CommonDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text('設定'),
-            onTap: () {Navigator.of(context).pushNamed('/setting');},
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(settings: RouteSettings(name: '/setting'),
+                  builder: (context) {
+                    return SettingPage(user);
+                  }));
+              },
           ),
         ],
       ),

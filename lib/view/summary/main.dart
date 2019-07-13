@@ -7,12 +7,14 @@ import 'package:kagile/view/widget/common_drawer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class SummaryPage extends StatefulWidget {
-  SummaryPage({Key key, this.summary}) : super(key: key);
+  SummaryPage({Key key, this.summary, this.user}) : super(key: key);
 
   final Summary summary;
 
+  final String user;
+
   @override
-  SummaryPageState createState() => SummaryPageState(summary);
+  SummaryPageState createState() => SummaryPageState(summary, user);
 }
 
 class SummaryPageState extends State<SummaryPage> {
@@ -26,6 +28,7 @@ class SummaryPageState extends State<SummaryPage> {
   String moneyOther = "";
   String pointWife = "";
   String pointHusband = "";
+  String user = "";
 
   var reference = FirebaseDatabase.instance.reference().child("summary").child("201907");
 
@@ -59,8 +62,9 @@ class SummaryPageState extends State<SummaryPage> {
     initDataMap();
   }
 
-  SummaryPageState(Summary summary) {
+  SummaryPageState(Summary summary, String user) {
     this.summary = summary;
+    this.user = user;
     this.dataMap = new Map();
     loadSummary();
   }
@@ -109,7 +113,7 @@ class SummaryPageState extends State<SummaryPage> {
               ),
             ),
           ),
-          drawer: CommonDrawer(),
+          drawer: CommonDrawer(user),
         ),
       ),
     );
@@ -126,28 +130,39 @@ class SummaryPageState extends State<SummaryPage> {
               margin: const EdgeInsets.only(bottom: 16.0),
               child: RichText(
                 text: TextSpan(
-                  text: "太郎のおこづかいは: ",
+                  text: "やりましたね！$userさん！",
                   style: TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
                   ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: "$moneyHusband円",
-                      style: TextStyle(fontSize: 18.0, color: Colors.green),
-                    ),
-                    TextSpan(
-                      text: " です",
-                      style: TextStyle(fontSize: 16.0, color: Colors.black),
-                    ),
-                  ]
                 ),
               )
+            ),
+            Container(
+                margin: const EdgeInsets.only(bottom: 16.0),
+                child: RichText(
+                  text: TextSpan(
+                      text: "太郎さんのおこづかいは: ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: "$moneyHusband円",
+                          style: TextStyle(fontSize: 18.0, color: Colors.green),
+                        ),
+                        TextSpan(
+                          text: " です",
+                          style: TextStyle(fontSize: 16.0, color: Colors.black),
+                        ),
+                      ]
+                  ),
+                )
             ),
             Container(
               margin: const EdgeInsets.only(bottom: 16.0),
               child: RichText(
                 text: TextSpan(
-                    text: "花子のおこづかいは: ",
+                    text: "花子さんのおこづかいは: ",
                     style: TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
                     ),
@@ -201,7 +216,7 @@ class SummaryPageState extends State<SummaryPage> {
               margin: const EdgeInsets.only(bottom: 16.0),
               child: RichText(
                 text: TextSpan(
-                    text: "太郎の獲得ポイントは: ",
+                    text: "太郎さんの獲得ポイントは: ",
                     style: TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
                     ),
@@ -222,7 +237,7 @@ class SummaryPageState extends State<SummaryPage> {
               margin: const EdgeInsets.only(bottom: 16.0),
               child: RichText(
                 text: TextSpan(
-                    text: "花子の獲得ポイントは: ",
+                    text: "花子さんの獲得ポイントは: ",
                     style: TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16.0, color: Colors.black
                     ),
@@ -313,8 +328,14 @@ class SummaryPageState extends State<SummaryPage> {
       assert(token != null);
       print("Push Messaging token: $token");
     });
-    _firebaseMessaging.subscribeToTopic("/topics/husband");
-    _firebaseMessaging.subscribeToTopic("/topics/wife");
+    if (user == "太郎") {
+      print("subcribe: 太郎");
+      _firebaseMessaging.subscribeToTopic("/topics/husband");
+    }
+    if (user == "花子") {
+      print("subcribe: 太郎");
+      _firebaseMessaging.subscribeToTopic("/topics/wife");
+    }
 
   }
 
