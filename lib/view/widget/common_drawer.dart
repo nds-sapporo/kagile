@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kagile/view/furikaeri/main.dart';
 import 'package:kagile/view/kajiboard/main.dart';
+import 'package:kagile/view/omoide/main.dart';
 import 'package:kagile/view/setting/main.dart';
 //import 'package:kagile/view/widget/about_tile.dart';
 //import 'package:kagile/utils/uidata.dart';
@@ -78,7 +79,7 @@ class CommonDrawer extends StatelessWidget {
                 Navigator.of(context).push(
                     MaterialPageRoute(settings: RouteSettings(name: '/omoide'),
                     builder: (context) {
-                      return SettingPage(user);
+                      return OmoidePage(user);
                     }));
                 },
             ),
