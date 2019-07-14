@@ -52,16 +52,6 @@ class _MyTabItemState extends State<MyTabItem> {
   @override
   void initState() {
     super.initState();
-    reference.child(widget.status).onChildRemoved.listen((event) {
-      setState(() {
-        loadList();
-      });
-    });
-    reference.child(widget.status).onChildAdded.listen((event) {
-      setState(() {
-        loadList();
-      });
-    });
     loadList();
   }
 
