@@ -179,6 +179,8 @@ class MyTaskItem extends StatelessWidget {
         user: this.user,
         comment: this.comment,
         point: this.point,
+        id: id,
+        status: nowStatus,
         textColor:Colors.black,
       ),
       ),
