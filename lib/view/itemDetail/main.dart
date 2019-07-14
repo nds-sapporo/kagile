@@ -22,7 +22,7 @@ class DetailPage extends StatelessWidget {
         children: <Widget>[
           TaskTile(
             title: this.title,
-            subtitle: "期限：" + this.limit,
+            subtitle: this.limit,
               textColor:Colors.white,
           ),
         ],

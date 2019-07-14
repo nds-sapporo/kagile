@@ -31,6 +31,8 @@ dependencies:
   http: ^0.12.0+1
   pie_chart: ^1.0.0
   cloud_functions: ^0.4.0+2
+  flutter_datetime_picker: ^1.2.1 # これを追記して保存
+  intl: ^0.15.8 # これを追記して保存
 
 dev_dependencies:
   flutter_test:

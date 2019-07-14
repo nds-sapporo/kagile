@@ -3,7 +3,6 @@ import 'package:kagile/view/summary/main.dart';
 import 'package:kagile/view/widget/common_drawer.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 /// ふりかえり
 class FurikaeriPage extends StatefulWidget {

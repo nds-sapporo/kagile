@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kagile/view/item/main.dart';
 import 'package:kagile/view/widget/common_drawer.dart';
 import 'tab_item.dart';
 
@@ -50,7 +51,13 @@ class KajiboardPage extends StatelessWidget {
           ),
           drawer: CommonDrawer(user, "kajiboard"),
           floatingActionButton: new FloatingActionButton(
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.of(context).push(
+                MaterialPageRoute(settings: RouteSettings(name: '/addTask'),
+                    builder: (context) {
+                      return AddItemPage(user);
+                    }))
+              },
               backgroundColor: Color.fromARGB(255, 0, 190, 200),
               child: new Stack(children: [
                 new Positioned ( // headline
