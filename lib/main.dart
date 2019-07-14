@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
         "/": (_) => LoginPage(),
 //        "/kajiboard": (_) => KajiboardPage(),
         "/furikaeri": (_) => FurikaeriPage(),
-        "/omoide":  (_) => OmoidePage(),
         "/summary": (_) => SummaryPage(),
 //        "/setting": (_) => SettingPage(),
       },
