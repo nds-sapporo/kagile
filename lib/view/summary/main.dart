@@ -95,8 +95,7 @@ class SummaryPageState extends State<SummaryPage> {
             body:Card(
               elevation: 4.0,
               margin: const EdgeInsets.all(10.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
                 children: <Widget>[
                   _leadArea(),
                   Divider(
