@@ -18,6 +18,8 @@ class CommonDrawer extends StatelessWidget {
         padding: EdgeInsets.zero,
         children: <Widget>[
           if (page == "kajiboard")
+            SizedBox(height: 24.0),
+          if (page == "kajiboard")
             Container(
               child: ListTile(
                 title: Text('家事ボード',style: TextStyle(color: Colors.white),),
@@ -28,16 +30,18 @@ class CommonDrawer extends StatelessWidget {
               ),
             ),
           if (page != "kajiboard") 
-          ListTile(
-            title: Text('家事ボード'),
-            onTap: () {
-              Navigator.of(context).push(
-                  MaterialPageRoute(settings: RouteSettings(name: '/kajiboard'),
-                      builder: (context) {
-                        return KajiboardPage(user);
-                      }));
-              },
-          ),
+            SizedBox(height: 24.0),
+          if (page != "kajiboard") 
+            ListTile(
+              title: Text('家事ボード'),
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(settings: RouteSettings(name: '/kajiboard'),
+                        builder: (context) {
+                          return KajiboardPage(user);
+                        }));
+                },
+            ),
           if (page == "furikaeri")
             Container(
               child: ListTile(
