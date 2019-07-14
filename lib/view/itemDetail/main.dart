@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:kagile/view/kajiboard/main.dart';
 import 'package:kagile/view/widget/common_scaffold.dart';
 import 'package:kagile/view/widget/task_tile.dart';
 import 'package:kagile/view/widget/point_tile.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class DetailPage extends StatelessWidget {
-  DetailPage(this.title, this.limit, this.comment, this.point, {Key key}) : super(key: key);
+  DetailPage(this.title, this.limit, this.comment, this.point, this.user, this.id, this.status, {Key key}) : super(key: key);
   Size deviceSize;
   final String title;
   final String limit;
   final String comment;
   final String point;
+  final String user;
+  final String id;
+  final String status;
 
   Widget profileHeader() => Container(
     height: deviceSize.height / 8,
@@ -164,12 +170,62 @@ class DetailPage extends StatelessWidget {
     ),
   );
 
-  Widget bodyData() => SingleChildScrollView(
+  void cancel(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        content: Text("この家事をあきらめますか？"),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("はい"),
+            onPressed: () async {
+              const url = "https://us-central1-spajam-kajaile.cloudfunctions.net/moveTask";
+              final response = await http.put(url,
+                  body: json.encode({
+                    'taskId':this.id,
+                    'preStatus':this.status,
+                    'nextStatus':"status_d",
+                    'nowplay': "other"
+                  }),
+                  headers: {"Content-Type": "application/json"});
+              print(response);
+              print("deleted user: $user");
+
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(settings: RouteSettings(name:'/kajiboard'),
+                      builder: (context) {
+                        return KajiboardPage(user);
+                      }
+                  )
+              );
+            },
+          ),
+          FlatButton(
+            child: Text("いいえ"),
+            onPressed: () => Navigator.pop(context),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget cancelButton(BuildContext context) {
+    return
+      OutlineButton(
+        onPressed: () {
+          cancel(context);
+        },
+        child: Text("あきらめる", style : TextStyle(fontSize: 30.0)),
+      );
+  }
+
+  Widget bodyData(BuildContext context) => SingleChildScrollView(
     child: Column(
       children: <Widget>[
         profileHeader(),
         followColumn(deviceSize),
         imagesCard(),
+        cancelButton(context),
 //        postCard(),
       ],
     ),
@@ -180,7 +236,7 @@ class DetailPage extends StatelessWidget {
     deviceSize = MediaQuery.of(context).size;
     return CommonScaffold(
       appTitle: "家事 詳細",
-      bodyData: bodyData(),
+      bodyData: bodyData(context),
       elevation: 0.0,
     );
   }

@@ -10,15 +10,24 @@ class TasklistTile extends StatelessWidget {
   final comment;
   final point;
   final textColor;
-  TasklistTile({this.title, this.subtitle, this.loginUser, this.user, this.limit, this.comment, this.point, this.textColor = Colors.black});
+  final id;
+  final status;
+  TasklistTile({this.title, this.subtitle, this.loginUser, this.user, this.limit, this.comment, this.point, this.id, this.status, this.textColor = Colors.black});
   @override
   Widget build(BuildContext context) {
     var image;
+    var userName;
     if( this.user == "husband" ) {
       image = AssetImage("images/ohashi.jpg");
     }
     else if ( this.user == "wife" ){
       image = AssetImage("images/noboribetsu.png");
+    }
+    if (this.loginUser == "husband") {
+      userName = "太郎";
+    }
+    else if (this.loginUser == "wife") {
+      userName = "花子";
     }
     return Row(
       // crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,7 +46,7 @@ class TasklistTile extends StatelessWidget {
           MaterialPageRoute(
             settings: RouteSettings(name: "/detail"),
             builder: (context) {
-              return DetailPage(title, this.limit, this.comment, this.point );
+              return DetailPage(title, this.limit, this.comment, this.point, userName, this.id, this.status );
             },
           ));
     },
@@ -65,7 +74,7 @@ class TasklistTile extends StatelessWidget {
           MaterialPageRoute(
             settings: RouteSettings(name: "/detail"),
             builder: (context) {
-              return DetailPage(title, limit, comment, point );
+              return DetailPage(title, limit, comment, point, userName, id, status);
             },
           ));
     },

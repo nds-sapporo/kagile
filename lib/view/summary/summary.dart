@@ -27,10 +27,16 @@ class Summary {
   }
 
   int moneyWife() {
+    if (weightedWifePoint()+weightedHusbandPoint() == 0) {
+      return 0;
+    }
     return ((actualMoney()*weightedWifePoint())/(weightedWifePoint()+weightedHusbandPoint())).round();
   }
 
   int moneyHusband() {
+    if (weightedWifePoint()+weightedHusbandPoint() == 0) {
+      return 0;
+    }
     return ((actualMoney()*weightedHusbandPoint())/(weightedWifePoint()+weightedHusbandPoint())).round();
   }
 
